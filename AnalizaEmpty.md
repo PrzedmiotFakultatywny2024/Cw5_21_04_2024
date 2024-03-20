@@ -2,6 +2,8 @@
 
 ![image](https://github.com/PrzedmiotFakultatywny2024/Cw5_21_04_2024/assets/24464854/69b6b42b-36e8-4c40-9124-c6af1d237fa7)
 
+*Dalszy tekst częściowo generowany autoamtycznie.*
+
 ## `setup.php`
 
 Ten plik `setup.php` jest częścią szablonu wtyczki dla systemu GLPI, który jest open-source'owym systemem zarządzania IT i serwisem helpdesk. Plik ten zawiera podstawowe definicje i funkcje niezbędne do zainicjowania i zarządzania wtyczką w systemie GLPI. 
@@ -48,4 +50,58 @@ Funkcja `plugin_emptyplg_uninstall()` jest wywoływana podczas odinstalowywania 
 ### Ogólne Przeznaczenie Pliku `hook.php`
 Plik `hook.php` w kontekście wtyczek GLPI służy do definiowania, jak wtyczka powinna być zainstalowana i odinstalowana. Jest to kluczowy element, który pozwala na bezpieczne dodawanie i usuwanie wtyczek, zapewniając, że wszystkie niezbędne kroki konfiguracji i dekonfiguracji są wykonane odpowiednio. W praktycznym zastosowaniu, implementacje tych funkcji mogą być znacznie bardziej złożone, zależnie od specyfiki i wymagań danej wtyczki.
 
+##   `emptyplg.xml`
 
+Plik `emptyplg.xml` jest plikiem konfiguracyjnym dla pustej wtyczki (`emptyplg`) do systemu GLPI, który służy do definiowania metadanych wtyczki. Ten format pliku jest typowy dla wtyczek GLPI, umożliwiając łatwe zarządzanie i dystrybucję wtyczek. Oto omówienie głównych sekcji i elementów tego pliku XML:
+
+### Elementy Główne
+- **`<name>` i `<key>`**: Te elementy określają nazwę wtyczki (`emptyplg`). Nazwa i klucz są tutaj identyczne i służą do jednoznacznej identyfikacji wtyczki w systemie GLPI.
+- **`<state>`**: Określa stan rozwoju wtyczki (`stable` w tym przypadku), co informuje użytkowników o gotowości i stabilności wtyczki. Możliwe wartości to między innymi `stable`, `beta`, `development`, `alpha`.
+- **`<logo>`**: Adres URL do logotypu wtyczki, który może być wyświetlany w interfejsie użytkownika GLPI lub na stronach poświęconych wtyczce.
+
+### Opis
+- **`<description>`**: Zawiera krótki i długi opis wtyczki w różnych językach (`<en>` dla angielskiego, `<fr>` dla francuskiego). Pozwala to na dostarczenie użytkownikom informacji o celu i funkcjach wtyczki w ich ojczystym języku.
+
+### Linki
+- **`<homepage>`, `<download>`, `<issues>`, `<readme>`**: Te elementy zawierają linki do strony domowej wtyczki, strony pobierania, śledzenia błędów i pliku README. Są to kluczowe zasoby dla użytkowników i programistów, oferujące informacje, wsparcie i aktualizacje.
+
+### Autorzy
+- **`<authors>`**: Lista autorów wtyczki. Daje to uznanie osobom odpowiedzialnym za rozwój wtyczki.
+
+### Wersje
+- **`<versions>`**: Sekcja ta zawiera informacje o różnych wersjach wtyczki oraz o kompatybilności każdej z nich z wersjami GLPI. Umożliwia to użytkownikom identyfikację, która wersja wtyczki jest odpowiednia dla ich instalacji GLPI.
+
+### Języki
+- **`<langs>`**: Określa języki, dla których dostępne są tłumaczenia wtyczki, co ułatwia międzynarodowe użycie.
+
+### Licencja
+- **`<license>`**: Typ licencji, na której udostępniona jest wtyczka (`GPL V3+` w tym przypadku). Jest to ważne dla użytkowników i programistów, aby zrozumieć, jak mogą używać i modyfikować wtyczkę.
+
+### Komentarze
+- Sekcje zakomentowane (`<!--tags>` i `<!--screenshots>`): Choć aktualnie zakomentowane, mogą zostać użyte do dodania tagów opisowych i zrzutów ekranu dla wtyczki. Tagi pomagają w kategoryzacji i wyszukiwaniu wtyczki, a zrzuty ekranu mogą zapewnić wizualną prezentację funkcjonalności.
+
+
+## `composer.json`
+
+Plik `composer.json` jest plikiem konfiguracyjnym używanym przez Composer, który jest systemem zarządzania zależnościami dla PHP. Umożliwia on definiowanie bibliotek, od których zależy Twój projekt PHP, oraz zarządzanie nimi. W kontekście pustej wtyczki do GLPI, `composer.json` określa wymagania dotyczące środowiska oraz narzędzia potrzebne do rozwoju i testowania wtyczki. Oto omówienie głównych sekcji tego pliku:
+
+### `require`
+Sekcja `require` określa zależności, które są niezbędne do działania projektu w środowisku produkcyjnym. W tym przypadku jedyną zależnością jest wersja PHP – wymagana jest wersja 7.4 lub nowsza. To oznacza, że wtyczka nie będzie działać na starszych wersjach PHP, co jest istotne przy planowaniu wdrożenia lub aktualizacji środowiska.
+
+### `require-dev`
+Sekcja `require-dev` zawiera zależności, które są potrzebne tylko do rozwoju i testowania projektu, a nie są wymagane w środowisku produkcyjnym. Tutaj zależność `glpi-project/tools` w wersji co najmniej `^0.4` wskazuje na narzędzia deweloperskie specyficzne dla projektów GLPI, które mogą obejmować linter, formatowanie kodu, narzędzia do testowania itp. To pomaga w utrzymaniu jakości kodu i ułatwia współpracę między deweloperami.
+
+### `config`
+Sekcja `config` umożliwia dostosowanie różnych aspektów zachowania Composera:
+
+- **`optimize-autoloader`**: Ustawienie to na `true` optymalizuje proces autoloadingu dla lepszej wydajności. To szczególnie ważne w produkcji, gdzie każda optymalizacja może przyczynić się do szybszego ładowania się strony.
+- **`platform`**: Określa platformę docelową dla zależności. Tutaj wersja PHP jest ustawiona na `7.4.0`, co oznacza, że Composer będzie rozwiązywał zależności tak, jakby był uruchomiony na PHP 7.4.0, niezależnie od faktycznej wersji PHP używanej przez dewelopera. To zapewnia spójność zależności między różnymi środowiskami deweloperskimi.
+- **`sort-packages`**: Gdy ustawione na `true`, polecenia takie jak `require` czy `update` będą dodawać i aktualizować zależności w `composer.json` w kolejności alfabetycznej, co poprawia czytelność i ułatwia zarządzanie zależnościami.
+
+## `.gitignore`
+
+Plik do ingorowanie niektórych rzeczy na githubie.
+
+## `tools`
+
+Dodatkowe narzędzia.
