@@ -8,4 +8,4 @@
 * zadanie zespołowe:
     * na bazie trzech wtyczek stworzyć własną wtyczkę
     * minimum statyczna strona, wersja zaawansowana: obsługa tabel w bazie danych
-    * kod ma być wrzucony na github na publiczne repozytorium https://github.com/PrzedmiotFakultatywny2024/test3
+    * kod ma być wrzucony na github na publiczne repozytorium 
